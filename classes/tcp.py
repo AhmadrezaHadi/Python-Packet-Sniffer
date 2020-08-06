@@ -5,12 +5,16 @@ from struct import *
 
 class TCP:
     def __init__(self, data):
-        src_port, dst_port, seq_number, ack_number, offset_reserved_flags = unpack('! H H L L H', data[:14])
+        src_port, dst_port, seq_number, ack_number, offset_reserved_flags, window_size, checksum, urgent_pointer = unpack(
+            '! H H L L H H H H', data[:20])
         self.src_port = src_port
         self.dst_port = dst_port
         self.ack_number = ack_number
         self.seq_number = seq_number
         self.offset = (offset_reserved_flags >> 12) * 4
+        self.window_size = window_size
+        self.checksum = checksum
+        self.urgent_pointer = urgent_pointer
         self.data = data[self.offset:]
 
         # flags

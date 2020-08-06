@@ -62,13 +62,15 @@ def main():
                                                          ipv4.ttl,
                                                          ipv4.protocol,
                                                          ipv4.checksum))
-                print(DATA_TAB_2 + 'Source IP: {}, Destination IP: {}'.format(ipv4.src_ip, ipv4.dst_ip))
+                print(
+                    DATA_TAB_2 + 'Source IP: {}, Destination IP: {}'.format(ipv4.src_ip, ipv4.dst_ip))
 
                 # ICMP
                 if ipv4.protocol == 1:
                     icmp = ICMP(ipv4.data)
                     print(TAB_1 + 'ICMP Segment: ')
-                    print(DATA_TAB_2 + 'Type: {}, Code: {}, Checksum: {}'.format(icmp.type, icmp.code, icmp.checksum))
+                    print(DATA_TAB_2 + 'Type: {}, Code: {}, Checksum: {}'.format(
+                        icmp.type, icmp.code, icmp.checksum))
                     print(TAB_2 + 'ICMP Data: ')
                     print(format_multi_line(DATA_TAB_3, icmp.data))
 
@@ -76,15 +78,21 @@ def main():
                 elif ipv4.protocol == 6:
                     tcp = TCP(ipv4.data)
                     print(TAB_1 + 'TCP Segment: ')
-                    print(DATA_TAB_2 + 'Source Port: {}, Destination Port: {}'.format(tcp.src_port, tcp.dst_port))
+                    print(
+                        DATA_TAB_2 + 'Source Port: {}, Destination Port: {}'.format(tcp.src_port, tcp.dst_port))
                     print(DATA_TAB_2 + 'Sequence Number: {}, ACK Number: {}, Offset: {}'.format(tcp.seq_number,
                                                                                                 tcp.ack_number,
                                                                                                 tcp.offset))
                     print(TAB_2 + 'Flags:')
-                    print(DATA_TAB_3 + 'NS: {}, CWR: {}, ECE: {}'.format(tcp.flag_ns, tcp.flag_cwr, tcp.flag_ece))
-                    print(DATA_TAB_3 + 'URG: {}, ACK: {}, PSH: {}'.format(tcp.flag_urg, tcp.flag_ack, tcp.flag_psh))
-                    print(DATA_TAB_3 + 'RST: {}, SYN: {}, FIN: {}'.format(tcp.flag_rst, tcp.flag_syn, tcp.flag_fin))
-
+                    print(DATA_TAB_3 + 'NS: {}, CWR: {}, ECE: {}'.format(tcp.flag_ns,
+                                                                         tcp.flag_cwr, tcp.flag_ece))
+                    print(DATA_TAB_3 + 'URG: {}, ACK: {}, PSH: {}'.format(
+                        tcp.flag_urg, tcp.flag_ack, tcp.flag_psh))
+                    print(DATA_TAB_3 + 'RST: {}, SYN: {}, FIN: {}'.format(
+                        tcp.flag_rst, tcp.flag_syn, tcp.flag_fin))
+                    print(DATA_TAB_3 + 'Window Size: {}, Checksum: {}, Urgent Pointer: {}'.format(tcp.window_size,
+                                                                                                  tcp.checksum,
+                                                                                                  tcp.urgent_pointer))
                     # HTTP Message
                     if tcp.src_port == 80 or tcp.dst_port == 80:
                         print(TAB_2 + 'HTTP Message: ')
@@ -103,14 +111,17 @@ def main():
                 elif ipv4.protocol == 17:
                     udp = UDP(ipv4.data)
                     print(TAB_1 + 'UDP Segment: ')
-                    print(DATA_TAB_2 + 'Source Port: {}, Destination Port: {}'.format(udp.src_port, udp.dst_port))
-                    print(DATA_TAB_2 + 'Size: {}, Checksum: {}'.format(udp.size, udp.checksum))
+                    print(
+                        DATA_TAB_2 + 'Source Port: {}, Destination Port: {}'.format(udp.src_port, udp.dst_port))
+                    print(
+                        DATA_TAB_2 + 'Size: {}, Checksum: {}'.format(udp.size, udp.checksum))
 
                     # DNS
                     if udp.dst_port == 53:
                         dns = DNS(udp.data)
                         print(TAB_2 + 'DNS Segment: ')
-                        print(DATA_TAB_3 + 'Transaction ID: {}'.format(dns.transaction_id))
+                        print(DATA_TAB_3 +
+                              'Transaction ID: {}'.format(dns.transaction_id))
                         print(TAB_3 + 'Flags: ')
                         print(DATA_TAB_4 + 'QR: {}, OpCode: {}, AA: {}, TC: {}, RD: {}'.format(dns.flag_qr,
                                                                                                dns.flag_opcode,
@@ -122,7 +133,8 @@ def main():
                                                                                              dns.flag_ad,
                                                                                              dns.flag_cd,
                                                                                              dns.flag_rcode))
-                        print(DATA_TAB_3 + 'Number of Questions: {}'.format(dns.questions))
+                        print(DATA_TAB_3 +
+                              'Number of Questions: {}'.format(dns.questions))
                         print(DATA_TAB_3 + 'Number of Answer RRs: {}, Number of Authority RRs: {}, Number of '
                                            'Additional RRs: {}'.format(dns.answer_RRs, dns.authority_RRs,
                                                                        dns.additional_RRs))
@@ -135,7 +147,8 @@ def main():
             elif ethernet.proto == 1544:
                 arp = ARP(ethernet.data)
                 print(TAB_1 + 'ARP Packet: ')
-                print(DATA_TAB_2 + 'Hardware Type: {}, Protocol Type: {}'.format(arp.h_type, arp.p_type))
+                print(
+                    DATA_TAB_2 + 'Hardware Type: {}, Protocol Type: {}'.format(arp.h_type, arp.p_type))
                 print(DATA_TAB_2 + 'Hardware Address Length: {}, Protocol Address Length: {}'.format(arp.hardware_size,
                                                                                                      arp.protocol_size))
                 print(DATA_TAB_2 + 'Operation: {}'.format(arp.op_code))
